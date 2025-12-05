@@ -31,10 +31,21 @@ public class UserService {
 	}
 	
 	public void delete(String id) {
-		findById(id);//Passamos o findById para reaprontrado
+		findById(id);
 		repo.deleteById(id);
 	}
 	
+	public User update(User obj) {
+		User userUpdated = findById(obj.getId());
+		updateData(userUpdated, obj);
+		return repo.save(userUpdated);
+	}
+	
+	private void updateData(User userUpdated, User obj) {
+		userUpdated.setName(obj.getName());
+		userUpdated.setEmail(obj.getEmail());
+	}
+
 	public User fromDTO(UserDTO objDto) {
 		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
 	}
